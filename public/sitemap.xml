@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  NOTE: the URL below assumes deployment to the `portfolio` repository under
+  the rahul2rcf-netizen GitHub Pages account. If this site is deployed
+  elsewhere (custom domain or a different repository), update robots.txt,
+  sitemap.xml and the canonical/OG URLs in index.html to match.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://rahul2rcf-netizen.github.io/portfolio/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
