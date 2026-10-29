@@ -13,8 +13,8 @@ export function Footer() {
               <span className="label-lg">M.RAHUL — PORTFOLIO V.2026</span>
             </div>
             <p className="label" style={{ color: 'rgba(244,241,232,0.72)', marginTop: 14, letterSpacing: '0.04em', textTransform: 'none', fontSize: 11.5, lineHeight: 1.7 }}>
-              Hand-built: React, TypeScript, Vite, Tailwind CSS, React Three Fiber. One accent, one page, no template.
-              Content verified against public sources, October 2026.
+              Hand-built: React, TypeScript, Vite, Tailwind CSS. Sticker-mode V2 — candy accents on brutalist bones,
+              zero animation libraries. Content verified against the résumé and public sources, October 2026.
             </p>
           </div>
 
@@ -43,6 +43,12 @@ export function Footer() {
             <a href={`mailto:${site.email}`} className="label-lg" style={{ width: 'fit-content' }}>
               {site.email.toUpperCase()}
             </a>
+            <a href={site.phoneHref} className="label-lg" style={{ width: 'fit-content' }}>
+              {site.phone}
+            </a>
+            <a href={site.resume} download="M_Rahul_Resume.pdf" className="label-lg" style={{ width: 'fit-content' }}>
+              RÉSUMÉ — PDF
+            </a>
             <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="label-lg" style={{ width: 'fit-content' }}>
               LINKEDIN
             </a>
@@ -60,7 +66,7 @@ export function Footer() {
             © {site.builtYear} M. RAHUL
           </span>
           <span className="label" style={{ color: 'rgba(244,241,232,0.72)' }}>
-            AI/ML GRADUATE · SOFTWARE DEVELOPER — {site.lastUpdated.toUpperCase()}
+            AI/ML GRADUATE · FULL-STACK INTERN '26 — {site.lastUpdated.toUpperCase()}
           </span>
           <a href="#top" className="label" style={{ color: 'var(--lime)' }}>
             BACK TO TOP ↑

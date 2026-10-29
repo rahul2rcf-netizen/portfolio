@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useActiveSection, type SectionId } from '../hooks/useActiveSection'
+import { site } from '../data/site'
 
 const LINKS: { id: SectionId; n: string; label: string }[] = [
   { id: 'about', n: '01', label: 'About' },
@@ -62,12 +63,12 @@ export function Nav() {
               </a>
             ))}
           </div>
-          <a href="#contact" className="chip chip--ink hidden md:inline-flex">
-            SAY HELLO
+          <a href={site.resume} className="chip chip--violet hidden lg:inline-flex" style={{ textDecoration: 'none' }} download="M_Rahul_Resume.pdf">
+            RÉSUMÉ ↓
           </a>
           <button
             type="button"
-            className="nav__burger md:hidden"
+            className="nav__burger lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
@@ -82,7 +83,7 @@ export function Nav() {
         </div>
       </nav>
       {open && (
-        <div id="mobile-menu" className="menu-overlay md:hidden" role="dialog" aria-modal="true" aria-label="Menu">
+        <div id="mobile-menu" className="menu-overlay lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="container-x">
             <p className="label text-faint" style={{ marginBottom: 18 }}>
               MENU — M.RAHUL
@@ -106,6 +107,15 @@ export function Nav() {
               onClick={() => setOpen(false)}
             >
               SAY HELLO <span className="btn-arrow" aria-hidden="true">→</span>
+            </a>
+            <a
+              href={site.resume}
+              download="M_Rahul_Resume.pdf"
+              className="btn btn--violet"
+              style={{ marginTop: 12, width: 'fit-content' }}
+              onClick={() => setOpen(false)}
+            >
+              RÉSUMÉ ↓ <span className="btn-arrow" aria-hidden="true">PDF</span>
             </a>
           </div>
         </div>

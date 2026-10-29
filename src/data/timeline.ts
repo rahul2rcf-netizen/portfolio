@@ -4,61 +4,108 @@ export interface Milestone {
   title: string
   body: string
   tag?: string
-  live?: boolean
+  kind?: 'win' | 'milestone' | 'ship'
 }
 
 /**
- * Timeline built only from verifiable dates: the GitHub account creation
- * date and each repository's creation date from the public GitHub API
- * (retrieved 2026-10-29). No education, internship, award, or certificate
- * entries are included because none are publicly documented yet.
+ * Sources: the ATS resume (uploaded 29 Oct 2026) for education and
+ * experience dates; the public GitHub API for repository creation dates.
+ * Both cross-checked on 29-10-2026.
  */
 export const milestones: Milestone[] = [
   {
-    dateISO: '2025-10-23',
-    date: 'Oct 2025',
-    title: 'Started shipping in public',
-    body: 'Created the GitHub account and made it the default home for everything built since — portfolio work, prototypes and notes, all open source.',
-    tag: 'beginning',
+    dateISO: '2020-07-01',
+    date: 'Jul 2020',
+    title: 'SSC — Z P High School, Chukkaluru',
+    body: 'Finished school with a 9.2 CGPA.',
+    tag: 'education',
+  },
+  {
+    dateISO: '2020-12-01',
+    date: 'Dec 2020 → Apr 2022',
+    title: 'Intermediate (MPC) — Sir CV Raman Junior College',
+    body: 'Two years of maths-physics-chemistry, scored 8.2.',
+    tag: 'education',
+  },
+  {
+    dateISO: '2022-10-01',
+    date: 'Oct 2022 → Jun 2026',
+    title: 'B.Tech, Computer Science & Engineering',
+    body: 'Sir C V Raman Institute of Science and Technology, Andhra Pradesh. Graduating with a 7.92 CGPA — and most of the real learning shipped as repos.',
+    tag: 'degree',
+  },
+  {
+    dateISO: '2026-01-01',
+    date: 'Jan → Jun 2026',
+    title: 'Full Stack Developer Intern — Palle Technology',
+    body: 'Built backend modules and authentication flows with Spring Boot + Hibernate over MySQL, and responsive React components for user-facing workflows, on top of REST APIs. Selected through the Campus-to-Corporate (C2C) program.',
+    tag: 'experience',
   },
   {
     dateISO: '2026-09-09',
     date: 'Sep 2026',
     title: 'Personal AI OS — first prototype',
-    body: 'Built the app shell for a personal workspace: notes, tasks, goals, calendar, a learning diary and an AI assistant, with an Express API handler that keeps provider keys server-side.',
-    tag: 'Personal AI OS',
-  },
-  {
-    dateISO: '2026-09-10',
-    date: 'Sep 2026',
-    title: 'RAYA Life OS take shape',
-    body: 'A journaling, goals and wellness dashboard in React 19 with optional Gemini features and honest local fallbacks — one more step toward products people can trust with their own data.',
-    tag: 'RAYA Life OS',
+    body: 'Notes, tasks, goals, calendar and an AI assistant behind a self-hosted Express API that keeps provider keys server-side.',
+    tag: 'personal project',
   },
   {
     dateISO: '2026-10-15',
     date: 'Oct 2026',
     title: 'ResourceNest goes live',
-    body: 'Published the learning-resource hub to GitHub Pages: search, topic filters, roadmaps with local progress, and career checklists. First project with a real public URL.',
-    tag: 'ResourceNest',
-    live: true,
+    body: 'Learning hub published to GitHub Pages — search, topic filters, roadmaps with browser-saved progress and career checklists.',
+    tag: 'shipped',
   },
   {
     dateISO: '2026-10-25',
     date: 'Oct 2026',
-    title: 'CareerLens AI ships an interactive demo',
-    body: 'An evidence-led resume-to-role review engine, with a browser-side demo anyone can try without uploading data — and a Streamlit app behind it.',
-    tag: 'CareerLens AI',
-    live: true,
+    title: 'CareerLens AI demo ships',
+    body: 'Evidence-linked resume-to-role review with an interactive browser demo anyone can try without uploading data.',
+    tag: 'shipped',
   },
   {
     dateISO: '2026-10-28',
     date: 'Oct 2026',
     title: 'EvidenceDesk v1 evaluated',
-    body: 'Local-first document Q&A with hybrid retrieval, page-level citations and an abstention path — plus a recorded synthetic evaluation rather than unproven claims.',
-    tag: 'EvidenceDesk',
+    body: 'Local-first document Q&A with hybrid retrieval, page-level citations, abstention logic and a recorded synthetic evaluation.',
+    tag: 'milestone',
+  },
+  {
+    dateISO: '2026-10-29',
+    date: 'Oct 2026',
+    title: 'Portfolio v2 live',
+    body: 'This site — shipped in public, wired with GitHub Pages auto-deploys.',
+    tag: 'this site',
   },
 ]
 
+export const achievements = [
+  {
+    stat: '500+',
+    label: 'CodeChef problems',
+    detail: 'difficulty-rated problems solved and counting',
+  },
+  {
+    stat: 'C2C',
+    label: 'Internship selection',
+    detail: 'chosen for the Campus-to-Corporate program at Palle Technology, 2026',
+  },
+  {
+    stat: 'GSSoC',
+    label: 'Open-source community',
+    detail: 'contributions across GirlScript Summer of Code and Hacktoberfest',
+  },
+]
+
+export const experience = {
+  role: 'Full Stack Developer Intern',
+  org: 'Palle Technology',
+  period: 'Jan 2026 — Jun 2026',
+  points: [
+    'Full-stack feature work across Java, Spring Boot, Hibernate, MySQL, React and REST APIs.',
+    'Built backend modules and authentication flows with Spring Boot.',
+    'Developed responsive React components for user-facing workflows.',
+  ],
+}
+
 export const journeyNote =
-  'Dates verified from the public GitHub API on 29 Oct 2026 (account and repository creation dates). Education, internships and certifications are not publicly documented yet — happy to share those on request.'
+  'Dates and scores from the uploaded resume (October 2026), cross-checked against the public GitHub API — see everything I claim in a repo or a document.'

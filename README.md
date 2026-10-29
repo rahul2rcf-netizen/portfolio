@@ -1,17 +1,18 @@
-# M. Rahul — Portfolio 2026
+# M. Rahul — Portfolio 2026 · v2 "sticker mode"
 
-Premium single-page portfolio for **M. Rahul** — AI/ML Graduate · Software Developer.
-Neo-brutalist art direction on warm paper with one electric-lime accent, an interactive
-Three.js sculpture in the hero, and content that is verified against public sources
-(resume-derived skill list, GitHub profile README, and each project repository).
+Single-page portfolio for **M. Rahul** — AI/ML Graduate · Software Developer (B.Tech CSE ’26).
+Gen-Z sticker-mode art direction: warm paper base, deep ink structure, one lime brand
+accent with candy violet/pink stickers, pill chips on brutalist borders, a marquee +
+checker divider, and a pure-SVG sticker collage in the hero. The real résumé
+(`public/resume.pdf`) is served from the site itself, and every section header in
+Contact links your actual email / phone / LinkedIn / GitHub — no placeholder labels.
 
-**Everything factual on this site traces to a source.** Features of each project were
-read from the repository READMEs or source code on 29 Oct 2026. Nothing offers fake
-metrics: the Journey timeline uses only dates from the public GitHub API, skills are
-grouped into *core / used in projects / actively exploring*, and all stated caveats
-(EvidenceDesk's synthetic evaluation, CareerLens' demo-not-engine distinction,
-ResourceNest's front-end-only newsletter) are carried through from the projects' own
-documentation.
+**Everything factual on this site traces to a source.** Project features were read from
+each repository's README or source, the Journey timeline uses dates from the résumé plus
+the public GitHub API, the skills panel reproduces the ATS résumé list verbatim, and all
+stated caveats (EvidenceDesk's synthetic evaluation, CareerLens' demo-not-engine
+distinction, ResourceNest's front-end-only newsletter) are carried through from the
+projects' own documentation. Renders tested from 360 px phone through 1920 px desktop.
 
 ---
 
@@ -22,28 +23,20 @@ documentation.
 | Framework | React 19 + TypeScript (strict) | Component reuse, typed content data |
 | Build | Vite 7 | Fast dev, lean production output |
 | Styling | Tailwind CSS 4 (`@tailwindcss/vite`) + a hand-written design-token layer in `src/index.css` | Tokens for palette/typography/motion; utilities for layout |
-| 3D | `three` via `@react-three/fiber` | One bespoke hero scene, no drei dependency |
+| Hero art | `StickerPile.tsx` — SVG starburst + circle stickers + ticket chips + hand-drawn arrow, Casio-plain CSS motion | Sticker collage replaces any WebGL scene: zero canvas, tiny payload |
 | Animation | CSS transitions/keyframes + IntersectionObserver + one small pointer-tilt hook | Zero runtime animation dependencies; respects `prefers-reduced-motion` centrally |
 | Fonts | Bricolage Grotesque (display), Archivo (body), Azeret Mono (labels) — Google Fonts, `display=swap` | Editorial character with system-font fallbacks |
 
-Deliberately **not** installed: Framer Motion/GSAP (CSS + IO cover every interaction on
-this page), 3D helpers like drei (hand-rolled pointer parallax is smaller), icon fonts.
+Deliberately **not** installed: `three` / `@react-three/fiber` (removed in v2 — the
+884 kB 3D chunk is gone), Framer Motion/GSAP, icon fonts.
 
-### Performance profile (production build)
+### Performance profile (production build, v2)
 
 ```
-index.html                2.8 kB   (gzip 1.0 kB)
-index CSS                28.9 kB   (gzip 6.9 kB)
-index JS                281.5 kB   (gzip 87.4 kB)  ← react/react-dom + app
-Hero3D chunk + three    888.0 kB   (gzip 240 kB)   ← code-split, loads after first paint
+index.html                2.8 kB   (gzip 1.1 kB)
+index CSS                31.7 kB   (gzip 7.6 kB)
+index JS                287.2 kB   (gzip 88.7 kB)   react/react-dom + app — single chunk
 ```
-
-- The whole 3D layer (three.js + R3F + scene) is `React.lazy`-loaded behind an SVG
-  fallback, so first paint never waits on WebGL.
-- Canvas FPS loop switches to `demand` when the hero leaves the viewport
-  (IntersectionObserver) and under `prefers-reduced-motion`.
-- If WebGL is unavailable (or context creation is denied), a static SVG sculpture is
-  rendered instead — no broken layout.
 
 ---
 
@@ -57,78 +50,53 @@ npm run build      # production bundle → dist/
 npm run preview    # serve dist/ locally (this is what QA ran against)
 ```
 
+Optional responsive QA sweep (uses your installed Edge/Chrome, no browser download):
+
+```bash
+npm i --no-save playwright     # one-time driver install
+node scripts/qa-responsive.mjs # 8 viewports × overflow/offender/viewport nav checks
+```
+
 ## Deploy
 
-The build uses a **relative base (`'./'`)**, so `dist/` deploys as-is to:
+Automatic — the repo deploys on every push to `main` via
+`.github/workflows/deploy.yml` (GitHub Pages, Source = GitHub Actions):
 
-1. **GitHub Pages (project site)** — recommended next step, matching the author's
-   existing repos:
-   - create a repo (e.g. `portfolio`), push this folder,
-   - Settings → Pages → Build and deployment → Source → **GitHub Actions**,
-   - use this workflow:
+**Live: https://rahul2rcf-netizen.github.io/portfolio/**
 
-   ```yaml
-   name: Deploy to Pages
-   on:
-     push:
-       branches: [main]
-   permissions:
-     contents: read
-     pages: write
-     id-token: write
-   jobs:
-     build:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v4
-         - uses: actions/setup-node@v4
-           with: { node-version: 22, cache: npm }
-         - run: npm ci
-         - run: npm run build
-         - uses: actions/configure-pages@v5
-         - uses: actions/upload-pages-artifact@v3
-           with: { path: dist }
-     deploy:
-       needs: build
-       runs-on: ubuntu-latest
-       environment:
-         name: github-pages
-         url: ${{ steps.deployment.outputs.page_url }}
-       steps:
-         - id: deployment
-           uses: actions/deploy-pages@v4
-   ```
-
-2. **Any static host** (Netlify/Vercel/Cloudflare Pages/S3): point the build command
-   at `npm run build` and the publish directory at `dist`. No server, no env vars.
-
-### After hosting, update 4 absolute URLs
-
-`index.html` (canonical + `og:url` + `og:image` + `twitter:image`),
-`public/sitemap.xml`, and `public/robots.txt` currently assume
-`https://rahul2rcf-netizen.github.io/portfolio/`. `public/404.html` redirects
-unknown paths back to the site root (GitHub Pages convention).
+Relative base (`'./'`) means `dist/` also drops onto any static host
+(Netlify/Vercel/Cloudflare Pages/S3) as-is. `public/404.html` redirects unknown paths
+back to the site root (GitHub Pages convention).
 
 ---
 
 ## Project structure
 
 ```
+public/            resume.pdf (the real résumé), og.png, apple-touch-icon.png,
+                   robots.txt, sitemap.xml, 404.html
 src/
   data/            site.ts, projects.ts, skills.ts, timeline.ts, repos.ts
                    ← all human-readable content lives here
-  hooks/           useReveal, useActiveSection, useReducedMotion (+ WebGL probe), useTilt
+  hooks/           useReveal, useActiveSection, useTilt
   components/
-    Nav.tsx        fixed nav, active-section state, overlay mobile menu (Esc + scroll lock)
-    Hero.tsx       name/roles/headline, availability chip, CTAs, scroll cue
-    three/         Hero3D (lazy canvas + boundary), EvidenceStack scene, SVG fallback
-    About.tsx      editorial intro, "NOW" tilt panel, verified fact tiles
-    Projects.tsx   five verified project cards (problem/features/stack/status/links)
-    ProjectPlate   per-project data-driven SVG illustration plates
-    Skills.tsx     core / shipped / exploring panels (no fake skill bars)
-    Journey.tsx    GitHub-API-verified timeline + "what's not listed" honesty card
+    Nav.tsx        fixed nav, active-section state, burger overlay ≤1023px
+                   (Esc + scroll-lock + résumé entry)
+    Hero.tsx       name/roles/headline, availability chip, CTA → résumé PDF, scroll cue
+    StickerPile    hero collage: starburst, CodeChef circle, C2C ticket, GSSoC ticket
+    Marquee +      App.tsx: skills marquee (✦) + checker divider between hero and about
+    checker
+    Section.tsx    lowercase section titles with rotated candy index stickers
+    About.tsx      editorial intro, "NOW" tilt panel, verified fact tiles (05 repos,
+                   500+ CodeChef, CGPA 7.92)
+    Projects.tsx   five verified project cards with ON THE RÉSUMÉ / PERSONAL BUILD
+                   badges, problem/features/stack/status/links
+    Skills.tsx     core (verbatim résumé list) / shipped-in-repos / exploring panels
+    Journey.tsx    résumé-verified timeline (education violet · experience pink ·
+                   shipped lime) + internship card + achievements
     GithubSection  repo grid: live GitHub API refresh with verified static fallback
-    Contact.tsx    giant closing statement, mailto + copy-email, LinkedIn, GitHub
+    Contact.tsx    giant closing statement, mailto + copy-email, tel:+91 chip,
+                   résumé download, LinkedIn
     Footer.tsx     dark close with sections/connect columns
   index.css        design tokens + full component stylesheet + reduced-motion rules
 ```
@@ -136,30 +104,50 @@ src/
 ## Accessibility & UX notes
 
 - Skip link, semantic landmarks, one `h1` → `h2`/`h3` hierarchy, `aria-current` state in nav.
-- Lighthouse (production build): **Accessibility 100 · Best Practices 100 · SEO 100**.
-- All interactive elements keyboard-reachable; visible `:focus-visible` outlines substituted
-  with a lime variant on dark surfaces.
-- `prefers-reduced-motion`: entrance/reveal/marquee/tilt/3D loop all switch off; content
-  stays fully visible (reveal system has a timeout fallback so scroll-observers can never
-  permanently hide in-fold content).
+- Lighthouse (v1 baseline): **Accessibility 100 · Best Practices 100 · SEO 100**.
+- All interactive elements keyboard-reachable; visible `:focus-visible` outlines
+  substituted with a lime variant on dark surfaces.
+- `prefers-reduced-motion`: entrance/reveal/marquee/pop/tilt all switch off and content
+  renders fully visible statically (the same mode the responsive QA screenshots use).
+- Burger menu below 1024px: opens 6 overlay links, closes on Escape, scroll is locked.
 - No hover-only information: every interactive affordance is also a labeled control.
+
+## Responsive verification (29 Oct 2026)
+
+Automated sweep against the production build — `scripts/qa-responsive.mjs`:
+
+| Viewport | Doc overflow | Off-viewport elements | Mobile nav |
+| --- | --- | --- | --- |
+| 360×740 phone-S | 0 px | none | burger opens 6 links, Esc closes |
+| 390×844 phone-M | 0 px | none | ✓ |
+| 414×896 phone-L | 0 px | none | ✓ |
+| 768×1024 tablet | 0 px | none | ✓ |
+| 1024×768 tablet-L | 0 px | none | full nav (≥1024) |
+| 1280×800 laptop | 0 px | none | full nav |
+| 1440×900 desktop | 0 px | none | full nav |
+| 1920×1080 wide | 0 px | none | full nav |
+
+Full-page captures at every size were visually reviewed (sticker mode renders statically
+under reduced motion for capture). Console clean (no errors) at all sizes.
 
 ## Verified content — what was checked (29 Oct 2026)
 
+- Résumé: `M_Rahul_ATS_Resume.pdf` — education (SSC 9.2 · Intermediate 8.2 · B.Tech
+  CSE CGPA 7.92), internship (Full Stack Developer Intern, Palle Technology,
+  Jan–Jun 2026, C2C selection), phone, skills list, project bullets.
 - Repos: `nevidencedesk`, `careerlence`, `resourcenest`, `RAYA-Life-Os`, `MicroServises-notes`
   (READMEs + source trees), profile README, and `api.github.com` metadata.
 - Live assets: ResourceNest GitHub Pages site, CareerLens Raw.githack demo.
-- Deliberately excluded: `auralis-music-player` (public repo does not exist — no assumed
-  Android music player), unlisted education/internships/certifications, unverified
-  technologies.
+- Deliberately excluded: `auralis-music-player` (public repo does not exist), unverified
+  technologies, invented metrics.
 
 ## Known limitations
 
-- Mobile and tablet layouts are implemented mobile-first and reviewed in code, but no
-  physical-device or viewport-emulation pass was available in the build environment —
-  worth a quick real-phone check before launch.
 - The GitHub repo grid prefers the live API (no key, 60 req/h anonymous) and falls back to
   a dated static snapshot; stars/commits are intentionally not displayed.
 - OG image (`public/og.png`) is generated via `scripts/make-assets.ps1` (GDI+) — regenerate
   with `powershell.exe -ExecutionPolicy Bypass -File scripts/make-assets.ps1` if you change
   the brand colors.
+
+- A physical-device smoke test (real phone) is still worth a pass after launch; the
+  automated sweep emulates viewports but not touch latency itself.

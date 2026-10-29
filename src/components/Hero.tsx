@@ -1,8 +1,5 @@
-import { lazy, Suspense } from 'react'
 import { site } from '../data/site'
-import SculptureFallback from './three/SculptureFallback'
-
-const Hero3D = lazy(() => import('./three/Hero3D'))
+import { StickerPile } from './StickerPile'
 
 const cast = (v: string) => ({ '--d': v }) as React.CSSProperties
 
@@ -18,13 +15,11 @@ export function Hero() {
   return (
     <header className="hero" id="top">
       <div className="hero__frame">
-        <span className="hero__corner hero__corner--tr label on-ink" style={{ padding: '6px 10px' }}>
-          PORTFOLIO — V.2026
+        <span className="hero__corner hero__corner--tr label on-ink" style={{ padding: '6px 12px', borderRadius: 999 }}>
+          PORTFOLIO — V2
         </span>
 
-        <Suspense fallback={<SculptureFallback quiet />}>
-          <Hero3D />
-        </Suspense>
+        <StickerPile />
 
         <div className="hero__content">
           <div className="rise flex flex-wrap items-center gap-3" style={cast('80ms')}>
@@ -50,14 +45,14 @@ export function Hero() {
 
           <p className="label-lg rise" style={cast('250ms')}>
             <span style={{ display: 'inline-block', color: 'var(--muted)' }}>
-              {site.roleName.toUpperCase()} · {site.roleB.toUpperCase()}
+              {site.roleName.toUpperCase()} <span style={{ color: 'var(--violet)' }}>✶</span> {site.roleB.toUpperCase()}
             </span>
           </p>
 
           <h2 className="display h-headline rise" style={cast('340ms')}>
-            I build <span className="u-mark">digital</span> products
+            I build <span className="u-violet">digital</span> products
             <br />
-            with purpose.
+            with <span className="squiggle">purpose</span>.
           </h2>
 
           <p className="lead rise" style={{ ...cast('440ms'), maxWidth: '52ch' }}>
@@ -66,10 +61,10 @@ export function Hero() {
 
           <div className="rise flex flex-wrap items-center gap-4" style={cast('540ms')}>
             <a className="btn btn--lime" href="#projects">
-              EXPLORE MY WORK <span className="btn-arrow" aria-hidden="true">↓</span>
+              SEE THE PROJECTS <span className="btn-arrow" aria-hidden="true">↓</span>
             </a>
-            <a className="btn btn--ghost" href={site.linkedin} target="_blank" rel="noopener noreferrer">
-              VIEW RÉSUMÉ <span className="btn-arrow" aria-hidden="true">↗</span>
+            <a className="btn btn--ghost" href={site.resume} download="M_Rahul_Resume.pdf">
+              RÉSUMÉ <span className="btn-arrow" aria-hidden="true">↓</span>
             </a>
           </div>
         </div>
@@ -79,11 +74,11 @@ export function Hero() {
             <span className="label">SCROLL TO ABOUT</span>
             <span className="scrollcue__bar" aria-hidden="true" />
           </a>
-          <span className="label text-faint on-ink" style={{ padding: '6px 10px', order: 2 }}>
-            WEB · ANDROID · APPLIED AI
+          <span className="label text-faint on-ink hero-foot-tag" style={{ padding: '6px 12px', borderRadius: 999, order: 2 }}>
+            WEB ✦ AI ✦ DOCUMENT INTELLIGENCE
           </span>
-          <span className="label text-muted" style={{ order: 1 }} aria-hidden="true">
-            EST. OCT 2025 — BUILT BY HAND
+          <span className="label text-muted hero-foot-note" style={{ order: 1 }} aria-hidden="true">
+            GRADUATED 2026 — SHIPPED EVER SINCE
           </span>
         </div>
       </div>

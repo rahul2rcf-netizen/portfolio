@@ -6,13 +6,17 @@ export function Section({
   index,
   title,
   kicker,
+  accent = 'lime',
   children,
   className = '',
 }: {
   id: string
   index: string
   title: string
-  kicker: string
+  /** Plain strings for most sections; richer ReactNodes (e.g. live contact
+   * links) render as the same mono label line. */
+  kicker: React.ReactNode
+  accent?: 'lime' | 'violet' | 'pink'
   children: React.ReactNode
   className?: string
 }) {
@@ -28,12 +32,17 @@ export function Section({
     })
   }, [inView, ref])
 
+  const stickerCls =
+    accent === 'violet' ? 'sec-sticker sec-sticker--violet' : accent === 'pink' ? 'sec-sticker sec-sticker--pink' : 'sec-sticker'
+
   return (
     <section id={id} ref={ref} className={`section ${inView ? 'is-in' : ''} ${className}`} aria-labelledby={`${id}-heading`}>
       <div className="container-x">
         <header className="sec-head">
           <div className="reveal-child">
-            <span className="label text-muted">( {index} )</span>
+            <span className={stickerCls} aria-hidden="true">
+              {index}
+            </span>
             <h2 id={`${id}-heading`} className="display h-section sec-title">
               {title}
             </h2>

@@ -12,6 +12,7 @@ export function Reveal({
   as: Tag = 'div',
   stagger = 0,
   childSelector,
+  style,
 }: {
   children: ReactNode
   delay?: number
@@ -19,6 +20,7 @@ export function Reveal({
   as?: 'div' | 'section' | 'article' | 'li' | 'figure'
   stagger?: number
   childSelector?: string
+  style?: React.CSSProperties
 }) {
   const { ref, inView } = useReveal<HTMLDivElement>()
 
@@ -34,7 +36,11 @@ export function Reveal({
   }, [childSelector, delay, inView, ref])
 
   return (
-    <Tag ref={ref as never} className={`reveal ${inView ? 'is-in' : ''} ${className}`} style={{ '--d': `${delay}ms` } as never}>
+    <Tag
+      ref={ref as never}
+      className={`reveal ${inView ? 'is-in' : ''} ${className}`}
+      style={{ ...(style ?? {}), '--d': `${delay}ms` } as never}
+    >
       {children}
     </Tag>
   )

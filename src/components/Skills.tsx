@@ -5,14 +5,14 @@ export function Skills() {
   return (
     <div>
       <div className="grid lg:grid-cols-3 gap-4">
-        {skillGroups.map((g) => (
-          <Reveal key={g.id} as="article" className="skill-panel" delay={0}>
+        {skillGroups.map((g, gi) => (
+          <Reveal key={g.id} as="article" className={`skill-panel ${gi === 0 ? 'skill-panel--lime' : ''}`} delay={0}>
             <div>
               <span className="proj__ghost-index display" aria-hidden="true" style={{ fontSize: 84, top: 8, right: 12 }}>
                 {g.index}
               </span>
               <div className="skill-panel__head">
-                <h3 className="display" style={{ fontSize: '1.3rem', lineHeight: 1 }}>
+                <h3 className="display" style={{ fontSize: '1.3rem', lineHeight: 1, textTransform: 'lowercase' }}>
                   {g.title}
                 </h3>
                 <span className="label text-faint">( {g.index} )</span>
@@ -41,8 +41,10 @@ export function Skills() {
         ))}
       </div>
 
-      <div className="card reveal" style={{ marginTop: 22, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'baseline' }}>
-        <span className="chip chip--ink">HOW TO READ THIS</span>
+      <div className="card reveal" style={{ marginTop: 22, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'baseline', borderBottomColor: 'var(--ink)' }}>
+        <span className="chip chip--pink">
+          <span className="dot-pulse" aria-hidden="true" /> HOW TO READ THIS
+        </span>
         <p className="label" style={{ color: 'var(--muted)', letterSpacing: '0.03em', textTransform: 'none', fontSize: 12, flex: '1 1 420px' }}>
           {skillNote}
         </p>

@@ -36,7 +36,11 @@ function ProjectCard({ p, flip }: { p: Project; flip: boolean }) {
           <h3 id={`proj-${p.id}`} className="display h-card">
             {p.name}
           </h3>
-          <StatusChip status={p.status} statusLabel={p.statusLabel} />
+          <div className="flex items-center gap-3 flex-wrap">
+            {p.badge === 'resume' && <span className="pbadge pbadge--resume">ON THE RÉSUMÉ</span>}
+            {p.badge === 'personal' && <span className="pbadge pbadge--personal">PERSONAL BUILD</span>}
+            <StatusChip status={p.status} statusLabel={p.statusLabel} />
+          </div>
         </div>
 
         <p className="lead" style={{ marginTop: 14 }}>
@@ -146,8 +150,9 @@ export function Projects() {
         </Reveal>
       ))}
       <p className="label text-faint" style={{ letterSpacing: '0.04em' }}>
-        Every feature above was checked against each repository's README or source on 29 Oct 2026. Preview plates are
-        illustrations of each project's interface motifs — not screenshots. Links open in a new tab.
+        Every feature above was checked against each repository{'’'}s README or source and cross-set with the resume
+        bullets on 29 Oct 2026. Preview plates are illustrations of each project{'’'}s interface motifs — not screenshots.
+        Pink = on the résumé · lavender = personal build.
       </p>
     </div>
   )
