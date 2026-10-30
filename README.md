@@ -1,6 +1,6 @@
 # M. Rahul — Portfolio 2026 · v2 "sticker mode"
 
-Single-page portfolio for **M. Rahul** — AI/ML Graduate · Software Developer (B.Tech CSE ’26).
+Single-page portfolio **M. Rahul** — AI/ML Graduate · Software Developer (B.Tech CSE ’26).
 Gen-Z sticker-mode art direction: warm paper base, deep ink structure, one lime brand
 accent with candy violet/pink stickers, pill chips on brutalist borders, a marquee +
 checker divider, and a pure-SVG sticker collage in the hero. The real résumé
@@ -133,7 +133,7 @@ under reduced motion for capture). Console clean (no errors) at all sizes.
 ## Verified content — what was checked (29 Oct 2026)
 
 - Résumé: `M_Rahul_ATS_Resume.pdf` — education (SSC 9.2 · Intermediate 8.2 · B.Tech
-  CSE CGPA 7.92), internship (Full Stack Developer Intern, Palle Technology,
+  CSE CGPA 8.2), internship (Full Stack Developer Intern, Palle Technology,
   Jan–Jun 2026, C2C selection), phone, skills list, project bullets.
 - Repos: `nevidencedesk`, `careerlence`, `resourcenest`, `RAYA-Life-Os`, `MicroServises-notes`
   (READMEs + source trees), profile README, and `api.github.com` metadata.
